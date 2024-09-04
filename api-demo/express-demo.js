@@ -5,22 +5,23 @@ const app = express()
 app.get('/', function (req, res) {
   res.send('Hello World')
 })
+  app.listen(3000)
+
 
 //API 테스트
 //API : GET + "http://localhost:3000/eunseotest"
-// test success
+// Test GOOOOOD!!
 
 app.get('/eunseotest', function (req, res) {
     res.send('Test GOOOOOD!!')
   })
 
 //API : GET + "http://localhost:3000/test/1"
-// "One!!"
+// "One??? ONE!!!"
 
 app.get('/test/1', function (req, res) {
     res.send('ONE??? ONE!!! ')
   })
-app.listen(3000)
 
 // API : GET + "http://localhost:3000/eunseo"
 app.get('/eunseo',function(req,res){
