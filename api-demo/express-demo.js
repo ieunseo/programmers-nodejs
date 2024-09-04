@@ -7,18 +7,18 @@ app.get('/', function (req, res) {
 })
 
 //API 테스트
-//API : GET + "http://localhost:3000/test"
+//API : GET + "http://localhost:3000/eunseotest"
 // test success
 
-app.get('/test', function (req, res) {
-    res.send('TEST SUCCESS')
+app.get('/eunseotest', function (req, res) {
+    res.send('Test GOOOOOD!!')
   })
 
 //API : GET + "http://localhost:3000/test/1"
 // "One!!"
 
 app.get('/test/1', function (req, res) {
-    res.send('ONE!! ')
+    res.send('ONE??? ONE!!! ')
   })
 app.listen(3000)
 
@@ -46,9 +46,3 @@ app.get('/test/:n', function(req, res) {
  
 });
 
-// test/__ << 빈칸에 오는 값을 n이라는 변수에 담아줘
-app.get('/product/1', function(req, res) {
-  res.json({
-      num: 1
-  });
-});
