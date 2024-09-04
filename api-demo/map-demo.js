@@ -6,7 +6,7 @@ app.listen(3300)
 //     let { id } = req.params;
 //     id = parseInt(id);
     
-//     if (db.get(id) === undefined) {
+//     if (p.get(id) === undefined) {
 //         res.json({
 //             message: "없는 상품!"
 //         });
@@ -25,18 +25,18 @@ app.get('/:id',function(req,res){
     
     // res.json(db.get(id))
         
-    if (db.get(id) === undefined) {
+    if (p.get(id) === undefined) {
         res.json({
             message: "없는 상품!"
         });
     } else {
-        product = db.get(id)
-        product.id = id
-        res.json(product)
+        pro = p.get(id)
+        pro.id = id
+        res.json(pro)
     }
 })
 
-let db = new Map()
+let p = new Map()
 
 let chocolate = {
     productName : "초콜릿",
@@ -53,15 +53,15 @@ let cup = {
     price:3500
 }
 
-db.set(1,chocolate)
-db.set(2,milk)
-db.set(3,cup)
+p.set(1,chocolate)
+p.set(2,milk)
+p.set(3,cup)
 
-// console.log(db)
+// console.log(p)
 
-// console.log(db.get(1))
-// console.log(db.get(2))
-// console.log(db.get(3))
+// console.log(p.get(1))
+// console.log(p.get(2))
+// console.log(p.get(3))
 
 // localhost:1234/1 ==> 초콜릿
 // localhost:1234/2 ==> 우유
