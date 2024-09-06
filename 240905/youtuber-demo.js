@@ -43,9 +43,14 @@ app.get('/youtuber/:id',function(req,res){
 
 //전체조회 아직 미구현
 app.get('/youtubers',(req,res)=>{
-    res.json({
-        res.json(Array.from(yt.values()));
-    })
+
+    var youtubers = {}
+    yt.forEach((value,key)=>{
+        youtubers[key] = value
+    });
+    
+    console.log(youtubers)
+    res.json(youtubers)
 })
 
  // http 외의 모듈 (미들웨어)
