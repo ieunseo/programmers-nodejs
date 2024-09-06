@@ -2,12 +2,17 @@
 
 const arr = ['a','b','c','d']
 
-arr.forEach((value,index,object)=>{
+const fEA = arr.forEach((value,index,object)=>{
     console.log("forEach")
     console.log(`${index} , ${value}, ${object}`)
 })
 
-arr.map((value,index,object)=>{
+const mA = arr.map((value,index,object)=>{
     console.log("map")
     console.log(`${index} , ${value}, ${object}`)
 })
+
+console.log(`forEach 로 return 하면 ${fEA}, map 으로 return 하면 ${mA}`)
+
+//forEach 는 return 하면 값을 못받지만
+// map 은 새로운 배열을 만들어서 리턴해준다.
