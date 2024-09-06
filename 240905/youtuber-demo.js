@@ -103,3 +103,27 @@ app.delete('/youtubers/:id',(req,res)=>{
 })
 
 // 수정
+// req 로는 id(프로퍼티) 를 받아 channel Title 을 수정함
+// res 는 제대로 수정됐는지?
+app.put('/youtubers/:id',(req,res)=>{
+
+    let {id} = req.params
+    id = parseInt(id)
+
+    var ytb = yt.get(id)
+    
+    if(ytb == undefined){
+        res.json({
+            message : `요청하신 ${id} 유튜버는 없는 유튜버입니다.`
+        })
+    }
+    
+    else{
+        let newTitle = req.body.channelTitle
+        ytb.channelTitle = newTitle;
+        yt.set(id,ytb)
+        res.json({
+            message: `${req.body.channelTitle} 로 수정되었습니다.`
+        })
+    }
+})
