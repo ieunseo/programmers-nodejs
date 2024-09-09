@@ -17,14 +17,20 @@ app.post('/youtubers/login', (req, res) => {
 
 // 회원가입
 app.post('/youtubers/join', (req, res) => {
-    const { userNo, password, name } = req.body;
+    const { userId, password, name } = req.body;
 
-    if (!userNo || !password || !name) {
+    if (!userId || !password || !name) {
         return res.status(400).json({
             message: "입력값을 다시 확인해주세요."
         });
     }
 
+    // userId가 이미 존재하는지 확인
+    if (database.has(userId)) {
+        return res.status(400).json({
+            message: '존재하는 아이디입니다.'
+        });
+    }
     // 회원가입 성공
     database.set(no++, req.body);
     res.status(201).json({
