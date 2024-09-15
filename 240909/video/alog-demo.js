@@ -67,26 +67,24 @@ app
             });
         }
     })
-
-
-app.put('/alog/:id',(req, res) => {
+    .put((req, res) => {
     let {id} = req.params
     id = parseInt(id)
 
-    var ytb = database.get(id)
+    var alogger = database.get(id)
 
-    if(ytb == undefined){
+    if(alogger){
+        let newTitle = req.body.channelTitle
+        alogger.channelTitle = newTitle;
+        database.set(id,alogger)
         res.json({
-            message : `요청하신 ${id} 유튜버는 없는 유튜버입니다.`
+            message: `${req.body.channelTitle} 로 수정되었습니다.`
         })
     }
 
     else{
-        let newTitle = req.body.channelTitle
-        ytb.channelTitle = newTitle;
-        database.set(id,ytb)
         res.json({
-            message: `${req.body.channelTitle} 로 수정되었습니다.`
+            message : `요청하신 ${id} 는 없는 블로거입니다.`
         })
     }
 })
