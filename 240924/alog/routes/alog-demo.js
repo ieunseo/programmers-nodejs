@@ -12,7 +12,7 @@ router.post('/'
         const err = validationResult(req)
         if(!err.isEmpty()){
             console.log("유효성검사에서 걸렸음.")
-            return res.status(404).json(err.array());
+            return res.status(400).json(err.array());
 
         }
     if(req.body.name){
@@ -30,8 +30,16 @@ router.post('/'
     }
 });
 
-// 전체 조회
-router.get('/', (req, res) => {
+// 회원 한명의 블로그 전체 조회
+router.get('/',
+    body('userId').notEmpty().isInt().withMessage('숫자 입력 필요')
+        , (req, res) => {
+        const err = validationResult(req)
+        if(!err.isEmpty()){
+            console.log("유효성검사에서 걸렸음.")
+            return res.status(400).json(err.array());
+
+        }
     const { userId } = req.body;
 
 
@@ -83,7 +91,7 @@ router.delete('/:id', (req, res) => {
 
         if (results.affectedRows > 0) {
             res.status(200).json({
-                message: `ID ${id}의 기록이 정상적으로 삭제되었습니다.`
+                message: `ID ${id}의 로그가 정상적으로 삭제되었습니다.`
             });
         } else {
             res.status(404).json({

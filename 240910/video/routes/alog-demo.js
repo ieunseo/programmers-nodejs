@@ -6,54 +6,54 @@ router.use(express.json());
 
 let database = new Map();
 var id = 1;
+
 router
     .route('/')
     // 채널 생성
     .post((req, res) => {
-        if(req.body.channelTitle) {
-            database.set(id++, req.body)
+        if (req.body.channelTitle) {
+            database.set(id++, req.body);
             res.status(201).json({
                 message: `${database.get(id - 1).channelTitle}님의 기록을 응원합니다.`
-            })
-        }else{
+            });
+        } else {
             res.status(400).json({
-                message : `요청값(양식) 이 잘못되었습니다.`
-                })
+                message: `요청값(양식)이 잘못되었습니다.`
+            });
         }
     })
     // 전체 조회
     .get((req, res) => {
-        var alogger = []
-        var{userId} = req.body;
+        let alogger = [];
+        let { userId } = req.query; // GET 요청에서는 req.query로 쿼리 파라미터 받기
 
-        if(database.size) {
-
-            if(userId == undefined){
+        if (database.size) {
+            if (userId == undefined) {
                 res.status(404).json({
-                    message:"로그인이 필요한 페이지입니다."
-                })
-            }else {
+                    message: "로그인이 필요한 페이지입니다."
+                });
+            } else {
                 database.forEach(function (value, key) {
-                    if (value.userId === userId) {
-                        alogger.push(value)
+                    if (value.userId == userId) {
+                        alogger.push(value);
                     }
-                })
-                if(alogger.length === 0){
+                });
+
+                if (alogger.length === 0) {
                     res.status(404).json({
-                        message:"조회할 채널이 없습니다"
-                    })
-                }else{
-                console.log(alogger)
-                res.status(200).json(alogger)
+                        message: "조회할 채널이 없습니다."
+                    });
+                } else {
+                    console.log(alogger);
+                    res.status(200).json(alogger);
                 }
             }
-        }
-        else{
+        } else {
             res.status(404).json({
-                message:"조회할 채널이 없습니다"
-            })
+                message: "조회할 채널이 없습니다."
+            });
         }
-    })
+    });
 
 router
     .route('/:id')
@@ -76,37 +76,35 @@ router
         const user = database.get(id);
 
         if (user) {
-            database.delete(id)
+            database.delete(id);
             res.status(200).json({
-                message : `${user.channelTitle} 이 정상적으로 삭제되었습니다.`
+                message: `${user.channelTitle}이 정상적으로 삭제되었습니다.`
             });
         } else {
             res.status(404).json({
-                message: "정보를 찾을수없습니다."
+                message: "정보를 찾을 수 없습니다."
             });
         }
-    })
+    });
 
+router.put('/:id', (req, res) => {
+    let { id } = req.params;
+    id = parseInt(id);
 
-router.put('/:id',(req, res) => {
-    let {id} = req.params
-    id = parseInt(id)
+    var ytb = database.get(id);
 
-    var ytb = database.get(id)
-
-    if(ytb == undefined){
+    if (ytb == undefined) {
         res.json({
-            message : `요청하신 ${id} 유튜버는 없는 블로거입니다.`
-        })
-    }
-
-    else{
-        let newTitle = req.body.channelTitle
+            message: `요청하신 ${id} 유튜버는 없는 블로거입니다.`
+        });
+    } else {
+        let newTitle = req.body.channelTitle;
         ytb.channelTitle = newTitle;
-        database.set(id,ytb)
+        database.set(id, ytb);
         res.json({
-            message: `${req.body.channelTitle} 로 수정되었습니다.`
-        })
+            message: `${req.body.channelTitle}로 수정되었습니다.`
+        });
     }
-})
+});
+
 module.exports = router;
