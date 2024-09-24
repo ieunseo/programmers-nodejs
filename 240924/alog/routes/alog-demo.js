@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const conn = require('../db'); // MySQL 연결 파일
-const { body, validationResult } = require('express-validator')
+const { body,param ,validationResult } = require('express-validator')
 router.use(express.json());
 
 // 채널 생성
@@ -46,7 +46,7 @@ router.get('/',
     const sql_query = `SELECT * FROM alog WHERE user_id = ?`;
     userId && conn.query(sql_query, [userId], (err, results) => {
         if (err) {
-            return res.status(500).json({ error: err.message });
+            return res.status(500).json({ error: err.message }).end();
         }
 
         if (results.length === 0) {
@@ -59,8 +59,16 @@ router.get('/',
     });
 });
 
-// 개별 조회
-router.get('/:id', (req, res) => {
+// 채널 아이디를 가지고 개별 조회
+router.get('/:id',
+    param('id').notEmpty().withMessage('채널 아이디 필요함.')
+    ,(req, res) => {
+        const err = validationResult(req)
+        if(!err.isEmpty()){
+            console.log("유효성검사에서 걸렸음.")
+            return res.status(400).json(err.array());
+
+        }
     const id = parseInt(req.params.id);
 
     const sql_query = `SELECT * FROM alog WHERE id = ?`;
