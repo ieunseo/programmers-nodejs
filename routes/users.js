@@ -1,0 +1,23 @@
+const express = require('express');
+const router = express.Router();
+
+
+router.use(express,json());
+//회원가입
+router.post('/join',(res,req)=>{
+    res.json('회원가입')
+})
+
+//로그인
+router.post('/login',(req,res)=>{
+    res.json('로그인')
+})
+//비밀번호 초기화 요청
+router.post('/changePW',(req,res)=>{
+    res.json('비밀번호 초기화요청')
+})
+//비밀번호 초기화
+router.post('/changePW',(req,res)=>{
+    res.json('비밀번호 초기화')
+})
+module.exports = router;
