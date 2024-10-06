@@ -1,6 +1,14 @@
 const conn = require('../db');
 const {StatusCodes} = require('http-status-codes');
-const allBooks = (req,res)=>{}
+const allBooks = (req,res)=>{
+    let sql = "SELECT * FROM books";
+    conn.query(sql, id,(err) => {
+        if(err){
+            console.log(err);
+            return res.status(StatusCodes.BAD_REQUEST).end();
+        }
+       })
+}
 const bookDetail = (req, res) => {
     let {id} = req.params;
     let sql = "SELECT * FROM books WHERE id=?";
