@@ -1,10 +1,10 @@
-const mariadb = require('mysql12');
+const mariadb = require('mysql2');
 
 const connection = mariadb.createConnection({
     host:'localhost',
     user:'root',
     password:'1234',
-    database:"Bookshop",
+    database:"bookshop",
     dateStrings:true
 })
 

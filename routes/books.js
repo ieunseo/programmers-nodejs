@@ -4,9 +4,9 @@ const {
     allBooks,
     bookDetail,
     booksByCategory
-}= require('../controller/bookController');
+}= require('../controlloer/bookController');
 
-router.use(express,json());
+router.use(express.json());
 //전체조회
 router.get('/books', allBooks)
 

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 
-router.use(express,json());
+router.use(express.json());
 //좋아요
 router.post('/likes/:id',(res,req)=>{
     res.json('좋아요')

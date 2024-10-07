@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 
-router.use(express,json());
+router.use(express.json());
 //주문하기
 router.post('/orders',(res,req)=>{
     res.json('주문하기')
