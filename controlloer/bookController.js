@@ -48,9 +48,17 @@ const allBooks = (req, res) => {
 
 
 const bookDetail = (req, res) => {
-    let { id } = req.params;
-    let sql = "SELECT * FROM books JOIN category ON books.category_id = category.id WHERE books.id = ?";
-    conn.query(sql, [id], (err, result) => {
+    let { book_id } = req.params;
+    let { user_id } = req.body;
+    let sql = `SELECT *,
+                            (SELECT count(*) FROM likes WHERE liked_book_id=books.id) AS likes,
+                            (SELECT EXISTS (SELECT * FROM likes WHERE user_id = ? AND liked_book_id = ?)) AS LIKED
+                        FROM books
+                        LEFT JOIN category
+                        ON books.category_id = category_id
+                        WHERE books.id = ?`;
+    let values = [ user_id ,book_id, book_id]
+    conn.query(sql, values, (err, result) => {
         if (err) {
             console.log(err);
             return res.status(StatusCodes.BAD_REQUEST).end();
